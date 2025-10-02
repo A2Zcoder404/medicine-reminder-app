@@ -5,7 +5,7 @@ Handles cross-platform notifications using Plyer
 
 import threading
 import time
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import List, Dict
 from plyer import notification
 import logging
@@ -20,6 +20,8 @@ class NotificationManager:
         self.running = False
         self.notification_thread = None
         self.check_interval = 60  # Check every minute
+        self.on_reminder_due = None
+        self._last_reset_date_ist = None
     
     def start_notification_service(self):
         """Start the background notification service"""
@@ -35,6 +37,10 @@ class NotificationManager:
         if self.notification_thread:
             self.notification_thread.join()
         logger.info("Notification service stopped")
+
+    def set_on_reminder_due(self, callback):
+        """Set a callback to be invoked when a reminder is due. Callback(reminder_dict)."""
+        self.on_reminder_due = callback
     
     def _notification_loop(self):
         """Main notification loop that runs in background"""
@@ -48,11 +54,21 @@ class NotificationManager:
     
     def _check_and_send_notifications(self):
         """Check for due reminders and send notifications"""
-        today = datetime.now().date()
-        current_time = datetime.now().time()
+        ist = timezone(timedelta(hours=5, minutes=30))
+        now_ist_dt = datetime.now(ist)
+        today = now_ist_dt.date()
+        current_time = now_ist_dt.time()
+        # Reset daily taken flags once per IST day change
+        if self._last_reset_date_ist != today:
+            try:
+                self.db_manager.reset_daily_taken_flags(today)
+                self._last_reset_date_ist = today
+                logger.info("Daily taken flags reset for %s (IST)", today)
+            except Exception as e:
+                logger.error("Failed to reset daily taken flags: %s", e)
         
-        # Get all reminders for today
-        reminders = self.db_manager.get_reminders_for_date(today)
+        # Get all reminders for today (filtered by weekday rules)
+        reminders = self.db_manager.get_reminders_for_date_filtered_by_weekday(today)
         
         for reminder in reminders:
             # Skip if already taken
@@ -64,11 +80,17 @@ class NotificationManager:
                 reminder_time = datetime.strptime(reminder['specific_time'], '%H:%M').time()
                 
                 # Check if it's time for this reminder (within 5 minutes)
-                time_diff = abs((datetime.combine(today, current_time) - 
-                               datetime.combine(today, reminder_time)).total_seconds())
+                time_diff = abs((datetime.combine(today, current_time).replace(tzinfo=ist) - 
+                               datetime.combine(today, reminder_time).replace(tzinfo=ist)).total_seconds())
                 
                 if time_diff <= 300:  # 5 minutes tolerance
                     self._send_notification(reminder)
+                    # Trigger UI confirmation if callback provided
+                    if self.on_reminder_due:
+                        try:
+                            self.on_reminder_due(reminder)
+                        except Exception as cb_err:
+                            logger.error("on_reminder_due callback failed: %s", cb_err)
                     
             except ValueError as e:
                 logger.error(f"Error parsing time for reminder {reminder['id']}: {e}")

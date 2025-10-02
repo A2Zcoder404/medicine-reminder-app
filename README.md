@@ -142,3 +142,22 @@ This project is open source and available under the MIT License.
 ## Support
 
 For issues and questions, please create an issue in the GitHub repository.
+
+## Aditya branch
+
+This branch introduces significant enhancements over `main`:
+
+- Weekday-specific scheduling: choose Mon–Sun per reminder; UI shows only on selected days
+- Flexible times: accepts 12/24‑hour formats (e.g., 12:39 am) with minute precision
+- IST time zone: all checks and saved taken timestamps use IST (UTC+5:30)
+- Daily confirmation dialog when a reminder fires; mark as Taken or Missed
+- Persistent intake history: new `intake_logs` table storing taken/missed with timestamps
+- Clickable weekday header buttons to navigate week days quickly
+- Add Reminder dialog improvements: removed time‑of‑day radios, larger window
+- Family management dialog: add and remove members; self user renamed to "Aditya"
+- History view: filter by user/date range; delete selected entries or clear filtered set
+- Navigation: History button placed beside top tabs; Medicines restored in bottom bar
+
+Notes:
+- Daily taken flags reset at IST midnight for active reminders, but history remains saved.
+- Existing reminders without weekday selection behave as "all days" for backward compatibility.
