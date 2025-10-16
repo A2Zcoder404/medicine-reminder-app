@@ -1,0 +1,69 @@
+2025-10-16 15:59:34 - notification_manager - INFO - Notification service started
+2025-10-16 15:59:34 - notification_manager - INFO - Daily taken flags reset for 2025-10-16 (IST)
+2025-10-16 16:02:34 - notification_manager - INFO - Overdue reminder notification for head (0 minutes late)
+2025-10-16 16:02:34 - notification_manager - INFO - Notification sent for reminder 6: head
+2025-10-16 16:03:34 - notification_manager - INFO - Overdue reminder notification for head (1 minutes late)
+2025-10-16 16:03:34 - notification_manager - INFO - Notification sent for reminder 6: head
+2025-10-16 16:04:34 - notification_manager - INFO - Overdue reminder notification for head (2 minutes late)
+2025-10-16 16:04:34 - notification_manager - INFO - Notification sent for reminder 6: head
+2025-10-16 16:05:34 - notification_manager - INFO - Overdue reminder notification for head (3 minutes late)
+2025-10-16 16:05:34 - notification_manager - INFO - Notification sent for reminder 6: head
+2025-10-16 16:21:25 - notification_manager - INFO - Notification service started
+2025-10-16 16:21:25 - notification_manager - INFO - Daily taken flags reset for 2025-10-16 (IST)
+2025-10-16 16:21:25 - notification_manager - INFO - Overdue reminder notification for head (19 minutes late)
+2025-10-16 16:21:25 - notification_manager - INFO - Notification sent for reminder 6: head
+2025-10-16 16:36:06 - notification_manager - INFO - Notification service started
+2025-10-16 16:36:06 - notification_manager - INFO - Daily taken flags reset for 2025-10-16 (IST)
+2025-10-16 16:36:06 - notification_manager - INFO - Overdue reminder notification for head (34 minutes late)
+2025-10-16 16:36:06 - notification_manager - INFO - Notification sent for reminder 6: head
+2025-10-16 16:37:06 - notification_manager - INFO - Overdue reminder notification for cold (710 minutes late)
+2025-10-16 16:37:06 - notification_manager - INFO - Notification sent for reminder 7: cold
+2025-10-16 16:42:37 - notification_manager - INFO - Notification service started
+2025-10-16 16:42:37 - notification_manager - INFO - Daily taken flags reset for 2025-10-16 (IST)
+2025-10-16 16:53:37 - notification_manager - INFO - Pre-reminder notification for Head
+2025-10-16 16:53:37 - notification_manager - INFO - Notification sent for reminder 8: Head
+2025-10-16 17:03:37 - notification_manager - INFO - Notification service started
+2025-10-16 17:03:37 - notification_manager - INFO - Daily taken flags reset for 2025-10-16 (IST)
+2025-10-16 17:10:44 - notification_manager - INFO - Notification service started
+2025-10-16 17:10:44 - notification_manager - INFO - Daily taken flags reset for 2025-10-16 (IST)
+2025-10-16 17:13:40 - notification_manager - INFO - Notification service started
+2025-10-16 17:13:40 - notification_manager - INFO - Daily taken flags reset for 2025-10-16 (IST)
+2025-10-16 17:31:05 - notification_manager - INFO - Notification service started
+2025-10-16 17:31:05 - notification_manager - INFO - Daily taken flags reset for 2025-10-16 (IST)
+2025-10-16 17:40:13 - notification_manager - INFO - Notification service started
+2025-10-16 17:40:13 - notification_manager - INFO - Daily taken flags reset for 2025-10-16 (IST)
+2025-10-16 17:42:00 - notification_manager - INFO - Notification service started
+2025-10-16 17:42:00 - notification_manager - INFO - Daily taken flags reset for 2025-10-16 (IST)
+2025-10-16 17:46:55 - notification_manager - INFO - Notification service started
+2025-10-16 17:46:55 - notification_manager - INFO - Daily taken flags reset for 2025-10-16 (IST)
+2025-10-16 17:47:10 - MedicineReminder - ERROR - Database error adding user: NOT NULL constraint failed: users.username
+2025-10-16 17:47:21 - MedicineReminder - ERROR - Database error adding user: NOT NULL constraint failed: users.username
+2025-10-16 17:49:33 - notification_manager - INFO - Notification service started
+2025-10-16 17:49:33 - notification_manager - INFO - Daily taken flags reset for 2025-10-16 (IST)
+2025-10-16 17:54:26 - notification_manager - INFO - Notification service started
+2025-10-16 17:54:26 - notification_manager - INFO - Daily taken flags reset for 2025-10-16 (IST)
+2025-10-16 17:55:35 - notification_manager - INFO - Notification service started
+2025-10-16 17:55:35 - notification_manager - INFO - Daily taken flags reset for 2025-10-16 (IST)
+2025-10-16 17:56:08 - notification_manager - INFO - Notification service started
+2025-10-16 17:56:08 - notification_manager - INFO - Daily taken flags reset for 2025-10-16 (IST)
+2025-10-16 17:56:36 - notification_manager - INFO - Notification service started
+2025-10-16 17:56:36 - notification_manager - INFO - Daily taken flags reset for 2025-10-16 (IST)
+2025-10-16 18:00:46 - notification_manager - INFO - Notification service started
+2025-10-16 18:00:46 - notification_manager - INFO - Daily taken flags reset for 2025-10-16 (IST)
+2025-10-16 18:01:04 - notification_manager - INFO - Notification service started
+2025-10-16 18:01:04 - notification_manager - INFO - Daily taken flags reset for 2025-10-16 (IST)
+2025-10-16 18:01:57 - notification_manager - INFO - Notification service started
+2025-10-16 18:01:57 - notification_manager - INFO - Daily taken flags reset for 2025-10-16 (IST)
+2025-10-16 18:06:44 - notification_manager - INFO - Notification service started
+2025-10-16 18:06:44 - notification_manager - INFO - Daily taken flags reset for 2025-10-16 (IST)
+2025-10-16 18:09:24 - notification_manager - INFO - Notification service started
+2025-10-16 18:09:24 - notification_manager - INFO - Daily taken flags reset for 2025-10-16 (IST)
+2025-10-16 18:10:24 - notification_manager - INFO - Notification service stopped
+2025-10-16 18:10:37 - notification_manager - INFO - Notification service started
+2025-10-16 18:16:12 - notification_manager - INFO - Notification service started
+2025-10-16 18:16:12 - notification_manager - INFO - Daily taken flags reset for 2025-10-16 (IST)
+2025-10-16 18:57:03 - notification_manager - INFO - Notification service started
+2025-10-16 18:57:03 - notification_manager - INFO - Daily taken flags reset for 2025-10-16 (IST)
+2025-10-16 18:59:02 - notification_manager - INFO - Test notification sent
+2025-10-16 20:25:11 - notification_manager - INFO - Notification service started
+2025-10-16 20:25:11 - notification_manager - INFO - Daily taken flags reset for 2025-10-16 (IST)

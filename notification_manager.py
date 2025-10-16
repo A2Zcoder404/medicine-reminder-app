@@ -5,6 +5,7 @@ Handles cross-platform notifications using Plyer
 
 import threading
 import time
+import sqlite3
 from datetime import datetime, timedelta, timezone
 from typing import List, Dict
 from plyer import notification
@@ -58,6 +59,7 @@ class NotificationManager:
         now_ist_dt = datetime.now(ist)
         today = now_ist_dt.date()
         current_time = now_ist_dt.time()
+        
         # Reset daily taken flags once per IST day change
         if self._last_reset_date_ist != today:
             try:
@@ -69,31 +71,53 @@ class NotificationManager:
         
         # Get all reminders for today (filtered by weekday rules)
         reminders = self.db_manager.get_reminders_for_date_filtered_by_weekday(today)
-        
+
         for reminder in reminders:
-            # Skip if already taken
-            if reminder['is_taken']:
-                continue
-            
-            # Parse the specific time
             try:
+                # Check intake_logs for today
+                # Use context manager for database connection
+                with sqlite3.connect(self.db_manager.db_path) as db:
+                    cur = db.cursor()
+                    cur.execute('SELECT status FROM intake_logs WHERE reminder_id = ? AND intake_date = ?', 
+                              (reminder['id'], today))
+                    log_row = cur.fetchone()
+                is_taken_today = log_row and log_row[0] == 'taken'
+                
+                if is_taken_today:
+                    continue
+
+                # Parse the scheduled time
                 reminder_time = datetime.strptime(reminder['specific_time'], '%H:%M').time()
+                reminder_dt = datetime.combine(today, reminder_time).replace(tzinfo=ist)
+                delta = (reminder_dt - now_ist_dt).total_seconds()
+
+                # Send notifications in these cases:
+                # 1. 10 minutes before the scheduled time
+                # 2. Every minute after the scheduled time until marked as taken
+                should_notify = False
                 
-                # Check if it's time for this reminder (within 5 minutes)
-                time_diff = abs((datetime.combine(today, current_time).replace(tzinfo=ist) - 
-                               datetime.combine(today, reminder_time).replace(tzinfo=ist)).total_seconds())
-                
-                if time_diff <= 300:  # 5 minutes tolerance
+                if 540 <= delta <= 660:  # 9-11 minutes before scheduled time
+                    should_notify = True
+                    logger.info(f"Pre-reminder notification for {reminder['medicine_name']}")
+                elif delta <= 0:  # Past scheduled time
+                    # If it's within the same minute as last check or over 12 hours late, skip
+                    minutes_late = abs(int(delta / 60))
+                    if minutes_late <= 720:  # Within 12 hours
+                        should_notify = True
+                        logger.info(f"Overdue reminder notification for {reminder['medicine_name']} ({minutes_late} minutes late)")
+
+                if should_notify:
                     self._send_notification(reminder)
-                    # Trigger UI confirmation if callback provided
                     if self.on_reminder_due:
                         try:
                             self.on_reminder_due(reminder)
                         except Exception as cb_err:
                             logger.error("on_reminder_due callback failed: %s", cb_err)
-                    
+                            
             except ValueError as e:
-                logger.error(f"Error parsing time for reminder {reminder['id']}: {e}")
+                logger.error(f"Error processing reminder {reminder['id']}: {e}")
+            except Exception as e:
+                logger.error(f"Unexpected error processing reminder {reminder['id']}: {e}")
     
     def _send_notification(self, reminder: Dict):
         """Send a notification for a specific reminder"""
