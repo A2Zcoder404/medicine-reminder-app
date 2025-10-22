@@ -1,0 +1,115 @@
+Medicine Reminder App - Installation & Run Guide (Aditya branch)
+===============================================================
+
+This guide explains how to set up and run the app on a fresh Windows PC (e.g., college computer) using the Aditya branch. It also includes alternatives and fixes for common issues.
+
+Prerequisites
+-------------
+1) Python 3.10 or newer
+   - Check:  python --version
+   - If missing, install from https://www.python.org/downloads/ and tick "Add Python to PATH".
+   - Alternate check: py --version
+
+2) Git for Windows
+   - Check:  git --version
+   - Install from https://git-scm.com/download/win if missing.
+
+Initial Setup (first time on a machine)
+--------------------------------------
+1) Clone the repository and switch to the Aditya branch
+   - Standard
+     git clone https://github.com/A2Zcoder404/medicine-reminder-app.git
+     cd medicine-reminder-app
+     git checkout Aditya
+   - If 'git' not recognized: open "Git Bash" and run the same commands there.
+   - If authentication prompts fail: ensure you're signed into GitHub in the browser or set up a Personal Access Token and use it when prompted.
+
+2) Create and activate a virtual environment
+   - Standard
+     python -m venv .venv
+     .\.venv\Scripts\activate
+   - If activation fails with "execution policy" error in PowerShell:
+     Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+     .\.venv\Scripts\activate
+   - If 'python' not found but 'py' works:
+     py -m venv .venv
+     .\.venv\Scripts\activate
+
+3) Install dependencies
+   - Standard
+     pip install -r requirements.txt
+   - If 'pip' not found:
+     python -m pip install -r requirements.txt
+     (or) py -m pip install -r requirements.txt
+   - If corporate proxy blocks downloads:
+     set HTTPS_PROXY=http://proxy.host:port
+     set HTTP_PROXY=http://proxy.host:port
+     python -m pip install -r requirements.txt
+
+Run the Application
+-------------------
+- Start the app
+  python main.py
+
+- On first run, the SQLite database (medicine_reminders.db) is created automatically in the project folder.
+- Notifications use Windows' Action Center via Plyer. If you don't see popups, check Focus Assist and system notification settings.
+
+Daily Usage / Getting Latest Changes
+------------------------------------
+- Pull updates and run
+  cd medicine-reminder-app
+  git checkout Aditya
+  git pull origin Aditya
+  .\.venv\Scripts\activate
+  python main.py
+
+Common Issues & Alternatives
+----------------------------
+1) Tkinter missing
+   - Symptom: ImportError: No module named tkinter
+   - Fix: Install the official Python from python.org (it includes Tkinter). Avoid Microsoft Store Python for this project.
+
+2) Plyer notifications not showing
+   - Ensure Focus Assist is off and Windows notifications are enabled for apps.
+   - Some university machines restrict toasts; app still runs and keeps reminder logic.
+
+3) Git auth or permission errors
+   - Use a Personal Access Token (classic) when prompted for a password.
+   - If blocked: download ZIP from GitHub, extract, then run steps from "Create and activate a virtual environment". You'll be on the branch snapshot contained in the ZIP.
+
+4) Virtual environment activation blocked
+   - Use Command Prompt instead of PowerShell:
+     .\.venv\Scripts\activate
+   - Or temporarily bypass policy in PowerShell:
+     Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+
+5) Ports, antivirus, or admin restrictions
+   - This app does not require network ports or admin rights.
+   - If antivirus flags the venv Scripts, add the project folder as an exception (if allowed by policy).
+
+6) Unicode/locale issues in console
+   - If emojis or unicode look broken, switch to Windows Terminal or use chcp 65001 before running.
+
+7) Timezone awareness
+   - The app uses IST internally for scheduling and saved timestamps. No OS timezone change is needed.
+
+Verifying It Works
+------------------
+- After launch you should see the main window with:
+  - Weekday buttons in the green header
+  - "My Reminders", "Family Reminders", and "History" at the top
+  - "+" floating add button at the bottom
+- Add a reminder, select specific weekdays and a precise time (e.g., 12:39 am), and save.
+- When due, a confirmation prompt asks if the medicine was taken; the intake is logged in History and persists across restarts.
+
+Optional: Clean Environment
+---------------------------
+- To remove the venv on a lab machine after use:
+  deactivate
+  rmdir /s /q .venv
+  (Run in Command Prompt; ensure the venv is deactivated first.)
+
+Support
+-------
+- Repo: https://github.com/A2Zcoder404/medicine-reminder-app
+- Branch for these features: Aditya
